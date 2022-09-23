@@ -1,0 +1,188 @@
+.block {
+    padding-top: 12rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.calculate {
+    z-index: 10000;
+    display: block;
+    box-sizing: content-box;
+    border: 1px solid transparent;
+    width: 32rem;
+    height: 38.5rem;
+    background-color: rgb(226, 226, 226);
+    box-shadow: 0px 2px 12px -2px rgb(2 2 2 / 68%);
+    
+    
+    &__screen {
+        position: relative;
+        height: 10rem;
+        overflow: hidden;
+    }
+    
+    &__minimize {
+        position: absolute;
+        width: 4.5rem;
+        height: 3.3rem;
+        
+        &:hover {
+            background-color: rgb(209, 208, 208);
+        }
+    }
+    
+    &__min {
+        position: absolute;
+        width: 1.2rem;
+        height: 1.05rem;
+        left: 1.7rem;
+        top: 1rem;
+        opacity: 0.9;
+    }
+    
+    &__close {
+        width: 4.5rem;
+        height: 3.3rem;
+        position: absolute;
+        right: 0;
+        overflow: hidden;
+        
+        &:hover {
+            background-color: rgb(226, 29, 29);
+        }
+    }
+    
+    &__x {
+        position: absolute;
+        left: 0.5rem;
+        top: 0.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        opacity: 0.5;
+        
+        
+        &::before {
+            position: absolute;
+            left: 1.8rem;
+            top: 0.5rem;
+            content: " ";
+            height: 1.4rem;
+            width: 0.1rem;
+            background-color: black;
+        }
+        
+        &::after {
+            position: absolute;
+            left: 1.8rem;
+            top: 0.5rem;
+            content: " ";
+            height: 1.4rem;
+            width: 0.1rem;
+            background-color: black;
+
+        }
+
+        &::before {
+            transform: rotate(45deg);
+        }
+
+        &::after {
+            transform: rotate(-45deg);
+        }
+
+        &--active {
+            opacity: 1;
+    
+            &::before {
+                background-color: rgb(0, 0, 0);
+            }
+            &::after {
+                background-color: rgb(0, 0, 0);
+            }
+        }
+        &--white {
+            opacity: 1;
+    
+            &::before {
+                background-color: rgb(255, 255, 255);
+            }
+            &::after {
+                background-color: rgb(255, 255, 255);
+            }
+        }
+    }
+
+    
+    
+    &__result {
+        position: absolute;
+        top: 5rem;
+        right: 0;
+        margin: 0 1rem 0 1rem;
+        font-size: 3.7rem;
+        font-weight: 600;
+    }
+
+    &__buttons {
+        padding: 0.5rem 0.2rem 0 0.2rem;
+    }
+
+    &__form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    &__btn {
+        position: relative;
+        width: 7.7rem;
+        height: 5.4rem;
+        margin-bottom: 0.2rem;
+        border: none;
+        // font-size: 1.8rem;
+
+        &:hover {
+            background-color: rgb(209, 208, 208);
+        }
+
+        &--white {
+        background-color: rgb(248, 247, 247);
+        }
+
+         &--green {
+        background-color: rgba(131, 163, 76, 0.404);
+
+        &:hover {
+            background-color: rgba(132, 163, 78, 0.74);;
+        }
+        }
+
+        &--bolder {
+        font-weight: 600;
+        font-size: 1.8rem;
+       }
+
+       &--big {
+        font-size: 2.4rem;
+       }
+
+       &--delete {
+        position: absolute;
+        left: 3rem;
+        top: 2rem;
+        background-image: url("/assets/images/free-icon.png");
+        width: 1.6rem;
+        height: 1.6rem;
+       }
+    }
+
+    
+}
+
+
+
+    
+

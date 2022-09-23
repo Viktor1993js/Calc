@@ -1,0 +1,16 @@
+<div class="block">
+    <div class="calculate" (mouseover)="screenShow = true" (mouseleave)="screenShow = false" id="сalc">
+            <div class="calculate__screen">
+                <div class="calculate__minimize"><img src="/assets/images/min.png" alt="Не загружено" class="calculate__min"></div>
+                <div class="calculate__close" *ngIf="screenShow" (click)="close()">
+                    <span class="calculate__x"></span>
+                </div>
+                <div class="calculate__result"><span class="calculate__sum">{{display}}</span></div>
+            </div>  
+            <div class="calculate__buttons">
+                <form action="#" class="calculate__form">
+                    <button *ngFor="let button of buttons" [class]="button.classList" (click)="onClick(button)">{{button.id}}</button>
+                </form>
+            </div>
+    </div>
+</div>
