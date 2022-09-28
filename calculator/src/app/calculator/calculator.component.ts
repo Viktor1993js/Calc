@@ -32,12 +32,12 @@ export class CalculatorComponent implements OnInit {
     { id: '+', action: '+', classList: 'calculate__btn calculate__btn--big' },
     { id: '+/-', action: '+-', classList: 'calculate__btn calculate__btn--white calculate__btn--big' },
     { id: '0', classList: 'calculate__btn calculate__btn--white calculate__btn--bolder' },
-    { id: ',', action: ',', classList: 'calculate__btn calculate__btn--white calculate__btn--big' },
+    { id: '.', classList: 'calculate__btn calculate__btn--white calculate__btn--big' },
     { id: '=', action: '=', classList: 'calculate__btn calculate__btn--green calculate__btn--big' },
   ]
 
-  first: string = "";
-  second: string = "";
+  first: string = "0";
+  second: string = "0";
   result: string = "";
   operand: string = "";
   display: string = "0";
@@ -45,6 +45,8 @@ export class CalculatorComponent implements OnInit {
   oneClick: boolean = false;
   twoClick: boolean = false;
   plusMinus: boolean = false;
+  comma: boolean = false;
+  delArrayNumb: string[] = [];
 
   constructor() {
 
@@ -55,13 +57,61 @@ export class CalculatorComponent implements OnInit {
 
   onClick(event: Button) {
 
-    if (event.action === undefined && this.display == this.result && this.operand === "") {
+    if (event.action === undefined && this.display === this.result && this.operand === "") {
       this.clean();
+    }
+    switch (event.id) {
+      case ".":
+        if (this.comma === false) {
+          this.comma = true;
+        }
+        break;
+      case "Del":
+        if (this.first != "0" && this.oneClick === false && this.display != this.result) {
+          this.comma = false;
+          this.buttons[18].action = undefined;
+          this.delArrayNumb = this.first.split("");
+          this.delArrayNumb.pop();
+          if (this.delArrayNumb.length === 0) {
+            this.delArrayNumb = ["0"];
+          }
+          this.first = this.delArrayNumb.join('');
+          this.display = this.first;
+        } else if (this.second != "0" && this.twoClick === true) {
+          this.comma = false;
+          this.buttons[18].action = undefined;
+          this.delArrayNumb = this.second.split("");
+          this.delArrayNumb.pop();
+          if (this.delArrayNumb.length === 0) {
+            this.delArrayNumb = ["0"];
+          }
+          this.second = this.delArrayNumb.join('');
+          this.display = this.second;
+        } else if (this.display === this.result && this.second === "0") {
+          this.comma = false;
+          this.buttons[18].action = undefined;
+          this.delArrayNumb = this.result.split("");
+          this.delArrayNumb.pop();
+          if (this.delArrayNumb.length === 0) {
+            this.delArrayNumb = ["0"];
+          }
+          this.result = this.delArrayNumb.join('');
+          this.display = this.result;
+        }
+        break;
+
+      default:
+        break;
     }
 
     if (this.oneClick === false) {
       if (this.first === "0" && !event.action) {
-        this.first = event.id;
+        if (this.comma === true) {
+          this.buttons[18].action = ".";
+          this.first = 0 + event.id;
+        } else {
+          this.first = event.id;
+        }
         let b = "-";
         if (this.plusMinus === true) {
           this.display = `${b + this.first}`;
@@ -69,6 +119,9 @@ export class CalculatorComponent implements OnInit {
           this.display = this.first;
         }
       } else if (!event.action) {
+        if (this.comma === true) {
+          this.buttons[18].action = ".";
+        }
         this.first = this.first + event.id;
         let b = "-";
         if (this.plusMinus === true) {
@@ -79,12 +132,21 @@ export class CalculatorComponent implements OnInit {
       }
     }
 
+
+
     if (this.twoClick === true) {
       if (this.second === "0" && !event.action) {
-        this.second = event.id;
-        let numberSecond = Number(this.second);
+        if (this.comma === true) {
+          this.buttons[18].action = ".";
+          this.second = 0 + event.id;
+        } else {
+          this.second = event.id;
+        }
         this.display = this.second;
       } else if (!event.action) {
+        if (this.comma === true) {
+          this.buttons[18].action = ".";
+        }
         this.second = this.second + event.id;
         this.display = this.second;
       }
@@ -98,24 +160,20 @@ export class CalculatorComponent implements OnInit {
         this.clean();
         break;
       case "÷":
-        this.twoClick = true;
-        this.oneClick = true;
         this.operand = "/";
+        this.changeElem();
         break;
       case "×":
-        this.twoClick = true;
-        this.oneClick = true;
         this.operand = "*";
+        this.changeElem();
         break;
       case "-":
-        this.twoClick = true;
-        this.oneClick = true;
         this.operand = "-";
+        this.changeElem();
         break;
       case "+":
-        this.twoClick = true;
-        this.oneClick = true;
         this.operand = "+";
+        this.changeElem();
         break;
       case "+/-":
         if (this.first > "0") {
@@ -133,60 +191,42 @@ export class CalculatorComponent implements OnInit {
         let numberFirst = Number(this.first);
         let numberSecond = Number(this.second);
         let numberResult = Number(this.result);
+        this.comma = false;
+        this.buttons[18].action = undefined;
         if (this.plusMinus === true) {
           numberFirst = numberFirst * -1;
         }
         if (this.operand === "/") {
           if (this.display = this.result) {
             this.result = `${numberResult / numberSecond}`;
-            this.display = this.result;
-            this.second = "0";
-            this.operand = "";
+            this.resetOne();
           } else {
             this.result = `${numberFirst / numberSecond}`;
-            this.display = this.result;
-            this.first = "0";
-            this.second = "0";
-            this.operand = "";
+            this.resetTwo();
           }
         } else if (this.operand === "*") {
           if (this.display = this.result) {
             this.result = `${numberResult * numberSecond}`;
-            this.display = this.result;
-            this.second = "0";
-            this.operand = "";
+            this.resetOne();
           } else {
             this.result = `${numberFirst * numberSecond}`;
-            this.display = this.result;
-            this.first = "0";
-            this.second = "0";
-            this.operand = "";
+            this.resetTwo();
           }
         } else if (this.operand === "-") {
           if (this.display = this.result) {
             this.result = `${numberResult - numberSecond}`;
-            this.display = this.result;
-            this.second = "0";
-            this.operand = "";
+            this.resetOne();
           } else {
             this.result = `${numberFirst - numberSecond}`;
-            this.display = this.result;
-            this.first = "0";
-            this.second = "0";
-            this.operand = "";
+            this.resetTwo();
           }
         } else if (this.operand === "+") {
           if (this.display = this.result) {
             this.result = `${numberResult + numberSecond}`;
-            this.display = this.result;
-            this.second = "0";
-            this.operand = "";
+            this.resetOne();
           } else {
             this.result = `${numberFirst + numberSecond}`;
-            this.display = this.result;
-            this.first = "0";
-            this.second = "0";
-            this.operand = "";
+            this.resetTwo();
           }
         }
         break;
@@ -204,6 +244,25 @@ export class CalculatorComponent implements OnInit {
     this.first = "0";
     this.display = "0";
     this.plusMinus = false;
+    this.comma = false;
+    this.buttons[18].action = undefined;
+  }
+  changeElem() {
+    this.twoClick = true;
+    this.oneClick = true;
+    this.comma = false;
+    this.buttons[18].action = undefined;
+  }
+  resetOne() {
+    this.display = this.result;
+    this.second = "0";
+    this.operand = "";
+  }
+  resetTwo() {
+    this.display = this.result;
+    this.first = "0";
+    this.second = "0";
+    this.operand = "";
   }
   close() {
 
