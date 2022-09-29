@@ -1,36 +1,16 @@
 <div class="block">
-    <div class="calculate">
+    <div class="calculate" (mouseover)="screenShow = true" (mouseleave)="screenShow = false" id="сalc">
             <div class="calculate__screen">
                 <div class="calculate__minimize"><img src="/assets/images/min.png" alt="Не загружено" class="calculate__min"></div>
-                <div class="calculate__close">
+                <div class="calculate__close" *ngIf="screenShow" (click)="close()">
                     <span class="calculate__x"></span>
                 </div>
-                <div class="calculate__result">0</div>
-            </div>
+                <div class="calculate__result"><span class="calculate__sum">{{display}}</span></div>
+            </div>  
             <div class="calculate__buttons">
                 <form action="#" class="calculate__form">
-                    <button class="calculate__btn">CE</button>
-                    <button class="calculate__btn">C</button>
-                    <button class="calculate__btn"></button>
-                    <button class="calculate__btn calculate__btn--big"><span class="divide">÷</span></button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">7</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">8</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">9</button>
-                    <button class="calculate__btn calculate__btn--big">×</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">4</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">5</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">6</button>
-                    <button class="calculate__btn calculate__btn--big">-</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">1</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">2</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">3</button>
-                    <button class="calculate__btn calculate__btn--big">+</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--big">+/-</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--bolder">0</button>
-                    <button class="calculate__btn calculate__btn--white calculate__btn--big">,</button>
-                    <button class="calculate__btn calculate__btn--green calculate__btn--big">=</button>
+                    <button *ngFor="let button of buttons" [class]="button.classList" (click)="onClick(button)">{{button.id}}</button>
                 </form>
             </div>
     </div>
 </div>
-`
