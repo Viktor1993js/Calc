@@ -8,9 +8,9 @@
                 <div class="calculate__result"><span class="calculate__sum">{{display}}</span></div>
             </div>  
             <div class="calculate__buttons">
-                <form action="#" class="calculate__form">
+                <div class="calculate__form">
                     <button *ngFor="let button of buttons" [class]="button.classList" (click)="onClick(button)">{{button.id}}</button>
-                </form>
+                </div>
             </div>
     </div>
 </div>
